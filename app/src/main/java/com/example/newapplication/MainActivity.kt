@@ -35,11 +35,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val rollButton : Button = findViewById(R.id.roll_button)
+        val resetButton : Button = findViewById(R.id.reset_button)
         diceOneImage = findViewById(R.id.dice_image)
         diceTwoImage = findViewById(R.id.dice_image_two)
 
         rollButton.setOnClickListener { rollDice() }
-        //addButton.setOnClickListener { oneMoreValue() }
+        resetButton.setOnClickListener { resetDices() }
+    }
+
+    private fun resetDices() {
+        Toast.makeText(this, "Reset dices!", Toast.LENGTH_SHORT).show()
+        diceOneImage.setImageResource(R.drawable.dice_1)
+        diceTwoImage.setImageResource(R.drawable.dice_1)
     }
 
     private fun rollDice() {
