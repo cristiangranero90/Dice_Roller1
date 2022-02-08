@@ -13,7 +13,8 @@ import com.google.mlkit.vision.text.Text
 class MainActivity : AppCompatActivity() {
 
     //Execute later, because the var is not assigned before the onCreate method.
-    lateinit var diceImage : ImageView
+    lateinit var diceOneImage : ImageView
+    lateinit var diceTwoImage : ImageView
 
     override fun onResume() {
         Log.i("Message: ", "onResume activity")
@@ -34,18 +35,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val rollButton : Button = findViewById(R.id.roll_button)
-        val addButton : Button = findViewById(R.id.add_button)
-        diceImage = findViewById(R.id.dice_image)
+        val resetButton : Button = findViewById(R.id.reset_button)
+        diceOneImage = findViewById(R.id.dice_image)
+        diceTwoImage = findViewById(R.id.dice_image_two)
 
         rollButton.setOnClickListener { rollDice() }
-        addButton.setOnClickListener { oneMoreValue() }
+        resetButton.setOnClickListener { resetDices() }
+    }
+
+    private fun resetDices() {
+        Toast.makeText(this, "Reset dices!", Toast.LENGTH_SHORT).show()
+        diceOneImage.setImageResource(R.drawable.dice_1)
+        diceTwoImage.setImageResource(R.drawable.dice_1)
     }
 
     private fun rollDice() {
         //Show a dialog Toast on android
         Toast.makeText(this, "Rolled!!!", Toast.LENGTH_SHORT).show()
-
         //resultText.text = randomNum.toString()
+        diceOneImage.setImageResource(diceImages(getRandomInt()))
+        diceTwoImage.setImageResource(diceImages(getRandomInt()))
+    }
+
+    private fun diceImages(num : Int ) : Int {
         val drawableResource = when ((1..6).random()) {
             1 -> R.drawable.dice_1
             2 -> R.drawable.dice_2
@@ -54,24 +66,10 @@ class MainActivity : AppCompatActivity() {
             5 -> R.drawable.dice_5
             else -> R.drawable.dice_6
         }
-        diceImage.setImageResource(drawableResource)
+        return drawableResource;
     }
 
-    private fun oneMoreValue() {
-
-        //val resultText : TextView = findViewById(R.id.result_text)
-       // if (resultText.text.length == 1) {
-         //   if (!resultText.text.equals("6")){
-           //     Toast.makeText(this, "added one more", Toast.LENGTH_SHORT).show()
-             //   resultText.text = ((resultText.text.toString().toInt()) + 1).toString()
-            //}
-            //else{
-              //  Toast.makeText(this, "No more numbers", Toast.LENGTH_SHORT).show()
-            //}
-        //}
-        //else{
-         //   Toast.makeText(this, "is a text? I Cant!", Toast.LENGTH_SHORT).show()
-          //  resultText.text = "1"
-       // }
+    private fun getRandomInt() : Int {
+        return (1..6).random()
     }
 }
